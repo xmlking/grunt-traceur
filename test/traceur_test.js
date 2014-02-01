@@ -22,6 +22,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var traceur = require('traceur');
 
 function getType (obj) {
   return Object.prototype.toString.call(obj)
@@ -45,13 +46,14 @@ exports.traceur = {
     test.done();
   },
 
-  module: function (test) {
-    var a = require('./tmp/module');
-    test.equal(a, 123, 'module and import should work');
+  modules: function (test) {
+    var b = require('./tmp/modules');
+    test.equal(b, '111', 'module and import should work');
     test.done();
   },
 
   class: function (test) {
+
     var Man = require('./tmp/class');
     var name = 'john';
     var man = new Man(name);
@@ -65,7 +67,7 @@ exports.traceur = {
     var files = fs.readdirSync(path.join(__dirname, 'tmp')).filter(function (filename) {
       return regex.test(filename);
     });
-    test.equal(files.length, 4);
+    test.equal(files.length, 5);
     test.done();
   }
 

@@ -16,13 +16,14 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     traceur: {
       options: {
-        sourceMaps: true
+        sourceMaps: true,
+        modules: 'commonjs'
       },
       test: {
         files: {
           'test/tmp/': ['test/fixtures/*.js']
         }
-      },
+      }
     },
 
     nodeunit: {

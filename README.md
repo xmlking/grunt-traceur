@@ -26,14 +26,14 @@ In your project's Gruntfile, add a section named `traceur` to the data object pa
 grunt.initConfig({
   traceur: {
     options: {
-      // traceur options here
+      sourceMaps: true // default: false
     },
     custom: {
       files:{
-        'build/all.js': ['js/**/*.js']
+        'build/': ['js/**/*.js'] // dest : [source files]
       }
     },
-  },
+  }
 })
 ```
 Once the files have ben transpiled into ES3, you can minify or concat them. 
