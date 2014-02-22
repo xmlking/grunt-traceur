@@ -24,17 +24,66 @@ In your project's Gruntfile, add a section named `traceur` to the data object pa
 
 ```js
 grunt.initConfig({
-  traceur: {
-    options: {
-      sourceMaps: true // default: false
-    },
-    custom: {
-      files:{
-        'build/': ['js/**/*.js'] // dest : [source files]
+ 
+    traceur: {
+      options: {
+          // traceur options here
+          experimental: true,
+          blockBinding: true,
+          deferredFunctions: true,
+          annotations: true,
+          debug:true
+      },
+      custom: {
+          files:[{
+              expand: true,
+              cwd: '<%= yeoman.app %>/modules/',
+              src: ['**/*.es6.js'],
+              dest: '<%= yeoman.app %>/modules/',
+              ext: '.js'
+          }]
+      }
+    }, ...
+```
+```js
+    // Watches files for changes and runs tasks based on the changed files
+    watch: {
+//      js: {
+//        files: ['<%= yeoman.app %>/modules/**/*.js'],
+//        tasks: ['newer:jshint:all'],
+//        options: {
+//          livereload: true
+//        }
+//      },
+      // SUMO
+      traceur :  {
+        files :  [ '<%= yeoman.app %>/modules/**/*.es6.js' ],
+        tasks :  [ 'newer:traceur' ]
+      },
+      jsTest: {
+        files: ['test/spec/{,*/}*.js'],
+        tasks: ['newer:jshint:test', 'karma']
+      },
+      styles: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        tasks: ['newer:copy:styles', 'autoprefixer']
+      },
+      gruntfile: {
+        files: ['Gruntfile.js']
+      },
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/modules/*/views/*.html',
+          '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.app %>/modules/**/*.js','!**/*.es6.js' //SUMO: added because I disabled jshint watch task.
+        ]
       }
     },
-  }
-})
 ```
 Once the files have ben transpiled into ES3, you can minify or concat them. 
 
