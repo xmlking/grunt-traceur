@@ -9,8 +9,12 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 
 ```shell
 npm install grunt-traceur --save-dev
-To install my verion which is built on traceur 0.0.24 
+To install my verion which is built on traceur 0.0.24  
 npm install --save-dev git://github.com/xmlking/grunt-traceur.git
+
+`traceur-compiler` offline ES6 to ES5 compile also need traceur-runtime.js
+bower install --save traceur-runtime 
+ or manually add bin/traceur-runtime.js to your html. 
 ```
 
 One the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
