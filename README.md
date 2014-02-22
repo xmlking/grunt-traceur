@@ -21,7 +21,7 @@ grunt.loadNpmTasks('grunt-traceur');
 
 ### Overview
 In your project's Gruntfile, add a section named `traceur` to the data object passed into `grunt.initConfig()`.
-
+This example below compiles all *.es6.js files into *.js files in the same location. 
 ```js
 grunt.initConfig({
  
@@ -45,6 +45,8 @@ grunt.initConfig({
       }
     }, ...
 ```
+Optionally add traceur to watch.
+
 ```js
     // Watches files for changes and runs tasks based on the changed files
     watch: {
