@@ -120,7 +120,6 @@ Any specified option will be passed through directly to traceur, thus you can sp
 Some common options:
 
 * `experimental` - Turn on all experimental features
-* `blockBinding` - Turn on support for `let` and `const`
 * `sourceMaps`  - Turn on sourceMaps generation 
 * `typeAssertions`  - Turn ontypeAssertions
 * `freeVariableChecker`  - Turn on freeVariableChecker // not recommended for angular project.
