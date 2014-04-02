@@ -28,13 +28,14 @@ grunt.loadNpmTasks('grunt-traceur');
 ### Overview
 In your project's Gruntfile, add a section named `traceur` to the data object passed into `grunt.initConfig()`.
 This example below compiles all *.es6.js files into *.js files in the same location. 
-Here is how I changed Yeoman's `generator-angular` generated Gruntfile.js file after creating angular seed project with: 
+
+Here is how I changed Yeoman's `generator-angular` plugin generated `Gruntfile.js` file after creating angular seed project with: 
 
 ```
 yo angular [app-name]
 ```
 
-[angular Gruntfile.js example](/Yeoman-Angular-Gruntfile.js)
+[Angular Gruntfile.js File](/Yeoman-Angular-Gruntfile.js)
  
 
 ```js
