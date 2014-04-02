@@ -28,44 +28,61 @@ grunt.loadNpmTasks('grunt-traceur');
 ### Overview
 In your project's Gruntfile, add a section named `traceur` to the data object passed into `grunt.initConfig()`.
 This example below compiles all *.es6.js files into *.js files in the same location. 
+Here is how I changed Yeoman's `generator-angular` generated Gruntfile.js file after creating angular seed project with: 
+
+```
+yo angular [app-name]
+```
+
+[angular Gruntfile.js example](/Yeoman-Angular-Gruntfile.js)
+ 
+
 ```js
 grunt.initConfig({
- 
-    traceur: {
+
+     traceur: {
       options: {
           // traceur options here
           experimental: true,
-          blockBinding: true,
-          deferredFunctions: true,
-          annotations: true,
+          //sourceMaps: true,
+          typeAssertions: true,
+          validate: true,
+          //freeVariableChecker: true,
+          commentCallback: true,
           debug:true
       },
       custom: {
           files:[{
               expand: true,
-              cwd: '<%= yeoman.app %>/modules/',
+              cwd: '<%= yeoman.app %>/scripts/',
               src: ['**/*.es6.js'],
-              dest: '<%= yeoman.app %>/modules/',
+              dest: '<%= yeoman.app %>/scripts/',
               ext: '.js'
           }]
       }
-    }, ...
+    },...
+
+}, ...
 ```
 Optionally add traceur to watch.
 
 ```js
     // Watches files for changes and runs tasks based on the changed files
     watch: {
-//      js: {
-//        files: ['<%= yeoman.app %>/modules/**/*.js'],
-//        tasks: ['newer:jshint:all'],
-//        options: {
-//          livereload: true
-//        }
-//      },
+      bower: {
+        files: ['bower.json'],
+        tasks: ['bowerInstall']
+      },
+//       js: {
+//         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+//         tasks: ['newer:jshint:all'],
+//         options: {
+//           livereload: true
+//         }
+//       },
       // SUMO
       traceur :  {
-        files :  [ '<%= yeoman.app %>/modules/**/*.es6.js' ],
+        files :  [ '<%= yeoman.app %>/scripts/**/*.es6.js' ],
         tasks :  [ 'newer:traceur' ]
       },
       jsTest: {
@@ -85,10 +102,9 @@ Optionally add traceur to watch.
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
-          '<%= yeoman.app %>/modules/*/views/*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.app %>/modules/**/*.js','!**/*.es6.js' //SUMO: added because I disabled jshint watch task.
+          '<%= yeoman.app %>/scripts/**/*.js','!**/*.es6.js' //SUMO: added this line because I commented jshint watch task above.
         ]
       }
     },
