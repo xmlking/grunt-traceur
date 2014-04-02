@@ -32,7 +32,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "traceur": "0.0.33",
+    "traceur": "0.0.32",
     "async": "~0.6.0",
     "underscore": "~1.6.0"
   },
