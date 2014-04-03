@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    
+
     // Configuration to be run (and then tested).
     traceur: {
       options: {
@@ -20,9 +20,13 @@ module.exports = function(grunt) {
         modules: 'commonjs'
       },
       test: {
-        files: {
-          'test/tmp/': ['test/fixtures/*.js']
-        }
+        files: [{
+          expand: true,
+          cwd: 'test/fixtures/',
+          src: '**/*.js',
+          dest: 'test/tmp/',
+          ext: '.js'
+        }]
       }
     },
 

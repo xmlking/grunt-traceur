@@ -23,6 +23,7 @@
 var fs = require('fs');
 var path = require('path');
 var traceur = require('traceur');
+require('source-map-support').install();
 
 function getType (obj) {
   return Object.prototype.toString.call(obj)
@@ -67,7 +68,14 @@ exports.traceur = {
     var files = fs.readdirSync(path.join(__dirname, 'tmp')).filter(function (filename) {
       return regex.test(filename);
     });
-    test.equal(files.length, 5);
+    test.equal(files.length, 6);
+
+    try {
+      new require('./tmp/source_map')();
+    } catch (e) {
+      test.notEqual(e.stack.match(/test\/fixtures\/source_map.js:3:16/), null);
+    }
+
     test.done();
   }
 
