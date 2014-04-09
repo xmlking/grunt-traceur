@@ -1,4 +1,4 @@
-// Generated on 2014-04-02 using generator-angular 0.8.0
+// Generated on 2014-04-04 using generator-angular 0.8.0
 'use strict';
 
 // # Globbing
@@ -24,27 +24,27 @@ module.exports = function (grunt) {
       app: require('./bower.json').appPath || 'app',
       dist: 'dist'
     },
-
-    // SUMO
-    traceur: {
+    traceur: { // SUMO
       options: {
-          // traceur options here
-          experimental: true,
-          //sourceMaps: true,
-          typeAssertions: true,
-          validate: true,
-          //freeVariableChecker: true,
-          commentCallback: true,
-          debug:true
+        experimental: true,
+        sourceMaps: true,
+        typeAssertions: true,
+        validate: true,
+        modules: 'amd',
+        //freeVariableChecker: true,
+        commentCallback: true,
+        debug: true
       },
       custom: {
-          files:[{
-              expand: true,
-              cwd: '<%= yeoman.app %>/scripts/',
-              src: ['**/*.es6.js'],
-              dest: '<%= yeoman.app %>/scripts/',
-              ext: '.js'
-          }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/',
+            src: ['**/*.js'], //src: ['**/*.es6.js'],
+            dest: '<%= yeoman.app %>/build/',
+            ext: '.js'
+          }
+        ]
       }
     },
     // Watches files for changes and runs tasks based on the changed files
@@ -53,17 +53,12 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['bowerInstall']
       },
-//       js: {
-//         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-//         tasks: ['newer:jshint:all'],
-//         options: {
-//           livereload: true
-//         }
-//       },
-      // SUMO
-      traceur :  {
-        files :  [ '<%= yeoman.app %>/scripts/**/*.es6.js' ],
-        tasks :  [ 'newer:traceur' ]
+      js: {
+        files: ['<%= yeoman.app %>/scripts/**/*.js'],
+        tasks: ['newer:jshint:all','newer:traceur'],
+        options: {
+          livereload: true
+        }
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
@@ -82,9 +77,9 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/views/**/*.html',
           '.tmp/styles/{,*/}*.css',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.app %>/scripts/**/*.js','!**/*.es6.js' //SUMO: added this line because I commented jshint watch task above.
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -131,7 +126,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/**/*.js'
       ],
       test: {
         options: {
@@ -144,14 +139,17 @@ module.exports = function (grunt) {
     // Empties folders to start fresh
     clean: {
       dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*'
-          ]
-        }]
+        files: [
+          {
+            dot: true,
+            src: [
+              '.tmp',
+              '<%= yeoman.dist %>/*',
+              '!<%= yeoman.dist %>/.git*',
+              '<%= yeoman.app %>/build/' //SUMO
+            ]
+          }
+        ]
       },
       server: '.tmp'
     },
@@ -162,12 +160,14 @@ module.exports = function (grunt) {
         browsers: ['last 1 version']
       },
       dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/styles/',
+            src: '{,*/}*.css',
+            dest: '.tmp/styles/'
+          }
+        ]
       }
     },
 
@@ -184,7 +184,7 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/scripts/{,*/}*.js',
+            '<%= yeoman.dist %>/scripts/**/*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
             '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
@@ -230,23 +230,27 @@ module.exports = function (grunt) {
 
     imagemin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/images',
+            src: '{,*/}*.{png,jpg,jpeg,gif}',
+            dest: '<%= yeoman.dist %>/images'
+          }
+        ]
       }
     },
 
     svgmin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/images',
+            src: '{,*/}*.svg',
+            dest: '<%= yeoman.dist %>/images'
+          }
+        ]
       }
     },
 
@@ -258,12 +262,14 @@ module.exports = function (grunt) {
           removeCommentsFromCDATA: true,
           removeOptionalTags: true
         },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.dist %>',
+            src: ['*.html', 'views/**/*.html'],
+            dest: '<%= yeoman.dist %>'
+          }
+        ]
       }
     },
 
@@ -272,12 +278,14 @@ module.exports = function (grunt) {
     // things like resolve or inject so those have to be done manually.
     ngmin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat/scripts',
-          src: '*.js',
-          dest: '.tmp/concat/scripts'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/concat/scripts',
+            src: '*.js',
+            dest: '.tmp/concat/scripts'
+          }
+        ]
       }
     },
 
@@ -291,25 +299,29 @@ module.exports = function (grunt) {
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/*'
-          ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: ['generated/*']
-        }]
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            dest: '<%= yeoman.dist %>',
+            src: [
+              '*.{ico,png,txt}',
+              '.htaccess',
+              '*.html',
+              'views/**/*.html',
+              'images/{,*/}*.{webp}',
+              'fonts/*',
+              'scripts/**/*.json' //SUMO
+            ]
+          },
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.dist %>/images',
+            src: ['generated/*']
+          }
+        ]
       },
       styles: {
         expand: true,
@@ -400,6 +412,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'traceur',
     'bowerInstall',
     'useminPrepare',
     'concurrent:dist',
