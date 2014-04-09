@@ -42,25 +42,27 @@ This example below compiles all *.es6.js files into *.js files in the same locat
 ```js
 grunt.initConfig({
 
-     traceur: {
+   traceur: { // SUMO
       options: {
-          // traceur options here
-          experimental: true,
-          //sourceMaps: true,
-          typeAssertions: true,
-          validate: true,
-          //freeVariableChecker: true,
-          commentCallback: true,
-          debug:true
+        experimental: true,
+        sourceMaps: true,
+        typeAssertions: true,
+        validate: true,
+        modules: 'amd',
+        //freeVariableChecker: true,
+        commentCallback: true,
+        debug: true
       },
       custom: {
-          files:[{
-              expand: true,
-              cwd: '<%= yeoman.app %>/scripts/',
-              src: ['**/*.es6.js'],
-              dest: '<%= yeoman.app %>/scripts/',
-              ext: '.js'
-          }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/',
+            src: ['**/*.js'], //src: ['**/*.es6.js'],
+            dest: '<%= yeoman.app %>/build/',
+            ext: '.js'
+          }
+        ]
       }
     },...
 
@@ -75,17 +77,12 @@ Optionally add traceur to watch.
         files: ['bower.json'],
         tasks: ['bowerInstall']
       },
-//       js: {
-//         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-//         tasks: ['newer:jshint:all'],
-//         options: {
-//           livereload: true
-//         }
-//       },
-      // SUMO
-      traceur :  {
-        files :  [ '<%= yeoman.app %>/scripts/**/*.es6.js' ],
-        tasks :  [ 'newer:traceur' ]
+      js: {
+        files: ['<%= yeoman.app %>/scripts/**/*.js'],
+        tasks: ['newer:jshint:all','newer:traceur'], //traceur watch
+        options: {
+          livereload: true
+        }
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
@@ -104,9 +101,9 @@ Optionally add traceur to watch.
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/views/**/*.html',
           '.tmp/styles/{,*/}*.css',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.app %>/scripts/**/*.js','!**/*.es6.js' //SUMO: added this line because I commented jshint watch task above.
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
