@@ -41,7 +41,8 @@
   },
   "devDependencies": {
     "grunt": "~0.4.4",
-    "grunt-contrib-nodeunit": "~0.3.3"
+    "grunt-contrib-nodeunit": "~0.3.3",
+    "source-map-support": "^0.2.5"
   },
   "keywords": [
     "gruntplugin"
